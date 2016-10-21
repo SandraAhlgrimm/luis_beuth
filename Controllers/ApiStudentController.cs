@@ -29,8 +29,8 @@ namespace luis_beuth.Controllers
 
         // 
         // GET: /Student/{Id}/ 
-        [HttpGet]
-        public Student Get(int id)
+        [HttpGet("{id}")]
+        public Student GetById(int id)
         {
             return _context.Student.FirstOrDefault(p => p.Id == id);
         }

@@ -31,7 +31,7 @@ namespace luis_beuth.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] Student student)
+        public async Task<IActionResult> Create([Bind("Name,MatriculationNumber,Approved")] Student student)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace luis_beuth.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,MatriculationNumber,Approved")] Student student)
         {
             if (id != student.Id)
             {

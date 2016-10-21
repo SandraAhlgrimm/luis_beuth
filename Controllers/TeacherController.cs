@@ -24,6 +24,34 @@ namespace luis_beuth.Controllers
             return View(await this._context.Teacher.ToListAsync());
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name")] Teacher teacher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    this._context.Add(teacher);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+            return View(teacher);
+        }
+
         // GET: Teacher/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

@@ -1,17 +1,20 @@
 @model IEnumerable<luis_beuth.Models.Data.Teacher>
 
 @{
-    ViewData["Title"] = "Dozent";
+    ViewData["Title"] = "Dozenten";
 }
 
-<h2>Index</h2>
+<h2>Liste der Dozenten</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Neuen anlegen</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -22,13 +25,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             @*<snippet_1>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Editieren</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
             </td>
             @*</snippet_1>*@
         </tr>

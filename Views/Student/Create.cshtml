@@ -1,9 +1,9 @@
 @model luis_beuth.Models.Data.Student
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Neuen Studenten anlegen";
 }
 
-<h2>Edit</h2>
+<h2>Studenten anlegen</h2>
 
 <form asp-action="Create">
     <div class="form-horizontal">
@@ -38,14 +38,14 @@
         
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Speichern" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Zurück zur Studentenliste</a>
 </div>
 
 @section Scripts {

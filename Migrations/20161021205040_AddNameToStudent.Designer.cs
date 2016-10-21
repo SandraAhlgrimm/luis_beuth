@@ -8,8 +8,8 @@ using luis_beuth.Data;
 namespace luis_beuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161021192326_UpdateDataModelsFSR")]
-    partial class UpdateDataModelsFSR
+    [Migration("20161021205040_AddNameToStudent")]
+    partial class AddNameToStudent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,6 +137,8 @@ namespace luis_beuth.Migrations
                     b.Property<bool>("Approved");
 
                     b.Property<int>("MatriculationNumber");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

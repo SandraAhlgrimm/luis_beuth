@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace luis_beuth.Migrations
 {
-    public partial class UpdateDataModelsFSR : Migration
+    public partial class AddNameToStudent : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,7 +56,8 @@ namespace luis_beuth.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
                     Approved = table.Column<bool>(nullable: false),
-                    MatriculationNumber = table.Column<int>(nullable: false)
+                    MatriculationNumber = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

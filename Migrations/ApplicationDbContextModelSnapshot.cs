@@ -137,6 +137,8 @@ namespace luis_beuth.Migrations
 
                     b.Property<int>("MatriculationNumber");
 
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.ToTable("Student");

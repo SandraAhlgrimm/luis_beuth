@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using luis_beuth.Data;
 
-namespace luis_beuth.Data.Migrations
+namespace luis_beuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -69,7 +69,13 @@ namespace luis_beuth.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("CourseNumber");
+
+                    b.Property<int>("Degree");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("StudyPath");
 
                     b.HasKey("Id");
 
@@ -82,6 +88,10 @@ namespace luis_beuth.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CourseId");
+
+                    b.Property<double>("Grade");
+
+                    b.Property<int>("Period");
 
                     b.Property<string>("Semester");
 
@@ -267,12 +277,12 @@ namespace luis_beuth.Data.Migrations
             modelBuilder.Entity("luis_beuth.Models.Data.Rent", b =>
                 {
                     b.HasOne("luis_beuth.Models.Data.Exam", "Exam")
-                        .WithMany()
+                        .WithMany("Rents")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("luis_beuth.Models.Data.Student", "Student")
-                        .WithMany()
+                        .WithMany("Rents")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

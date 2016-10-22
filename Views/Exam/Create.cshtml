@@ -87,38 +87,18 @@
     <a asp-action="Index">Zurück zur Examenliste</a>
 </div>
 
-<script lang="javascript">
-    var tSelect = document.getElementById("teacherSelect");
-    var tDiv = document.getElementById("newTeacher");
-    
-    var toggle = function(){
-        if(tSelect.value == -1){
-            tDiv.style.display = "block"
-        }else{
-            tDiv.style.display = "none"
-        }
-    }
-
-    tSelect.onchange = toggle;
-
-    toggle();
-    
-    var cSelect = document.getElementById("courseSelect");
-    var cDiv = document.getElementById("newCourse");
-    
-    var coggle = function(){
-        if(cSelect.value == -1){
-            cDiv.style.display = "block"
-        }else{
-            cDiv.style.display = "none"
-        }
-    }
-
-    cSelect.onchange = coggle;
-
-    coggle();
-</script>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script lang="javascript">
+        var tSelect = document.getElementById("teacherSelect");
+        var tDiv = document.getElementById("newTeacher");
+        
+        connectSelectorToElement(tSelect, tDiv);
+        
+        var cSelect = document.getElementById("courseSelect");
+        var cDiv = document.getElementById("newCourse");
+
+        connectSelectorToElement(cSelect, cDiv);
+    </script>
 }

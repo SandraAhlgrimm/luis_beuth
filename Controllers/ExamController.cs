@@ -1,15 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using luis_beuth.Models;
-using luis_beuth.Models.ExamViewModels;
-using luis_beuth.Models.Data;
-using luis_beuth.Services;
+using System.Threading.Tasks;
 using luis_beuth.Data;
-using Microsoft.Extensions.Logging;
+using luis_beuth.Models.Data;
+using luis_beuth.Models.ExamViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace luis_beuth.Controllers
 {
@@ -18,7 +15,7 @@ namespace luis_beuth.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ExamController> _logger;
 
-        public ExamController (ApplicationDbContext context, ILogger<ExamController> logger)
+        public ExamController(ApplicationDbContext context, ILogger<ExamController> logger)
         {
             _context = context;
             _logger = logger;
@@ -27,41 +24,16 @@ namespace luis_beuth.Controllers
         // GET: Exams
         public async Task<IActionResult> Index()
         {
-            var exams = await this._context.Exam.ToListAsync();
+            var exams = await _context.Exam.ToListAsync();
 
             return View(exams);
         }
 
         public IActionResult Create()
         {
-            var teachers = _context.Teacher.ToList().Concat(new []
-            {
-                new Teacher
-                {
-                    Id = -1, Name = "Neuer Dozent",
-                }
-            });
+            var model = new CreateExamViewModel();
 
-            var courses = _context.Courses.ToList().Concat(new []
-            {
-                new Course
-                {
-                    Id = -1, Name = "Neuer Kurs",
-                }
-            });
-
-            var model = new CreateExamViewModel
-            {
-                Teachers = new SelectList(teachers, "Id", "Name"),
-                Courses = new SelectList(courses, "Id", "Name"),
-                Periods = new []
-                {
-                    new PeriodViewModel{Period = Period.First, Name= "Erster Prüfungszeitraum"},
-                    new PeriodViewModel{Period = Period.Second, Name= "Zweiter Prüfungszeitraum"}
-                }
-            };
-
-            // _logger.LogDebug(ViewData["teachers"].ToString());
+            SetSelectors(model);
 
             return View(model);
         }
@@ -79,27 +51,26 @@ namespace luis_beuth.Controllers
                     var exam = new Exam
                     {
                         Semester = examViewModel.Semester,
-                        Grade = examViewModel.Grade,
+                        Grade = examViewModel.Grade
                     };
 
-                    if(examViewModel.TeacherId != -1)
+                    if (examViewModel.TeacherId != -1)
                     {
                         exam.TeacherId = examViewModel.TeacherId;
                     }
                     else
                     {
-                        exam.Teacher = new Teacher { Name = examViewModel.NewTeacherName };
+                        exam.Teacher = new Teacher {Name = examViewModel.NewTeacherName};
                     }
-                    
-                    if(examViewModel.CourseId != -1)
+
+                    if (examViewModel.CourseId != -1)
                     {
                         exam.CourseId = examViewModel.CourseId;
                     }
                     else
                     {
-                        exam.Course = new Course { Name = examViewModel.NewCourseName };
+                        exam.Course = new Course {Name = examViewModel.NewCourseName};
                     }
-                    
 
                     _context.Add(exam);
                     await _context.SaveChangesAsync();
@@ -107,38 +78,46 @@ namespace luis_beuth.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (DbUpdateException ex )
+            catch (DbUpdateException ex)
             {
                 _logger.LogError(new EventId(42), ex, ex.Message);
                 //Log the error (uncomment ex variable name and write a log.
                 ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
+                                             "Try again, and if the problem persists " +
+                                             "see your system administrator.");
             }
 
-            var teachers = _context.Teacher.ToList().Concat(new []
+            SetSelectors(examViewModel);
+
+            return View(examViewModel);
+        }
+
+        private void SetSelectors(CreateExamViewModel examViewModel)
+        {
+            var teachers = _context.Teacher.ToList().Concat(new[]
             {
                 new Teacher
                 {
-                    Id = -1, Name = "Neuer Dozent",
+                    Id = -1,
+                    Name = "Neuer Dozent"
                 }
             });
-            var courses = _context.Courses.ToList().Concat(new []
+            var courses = _context.Courses.ToList().Concat(new[]
             {
                 new Course
                 {
-                    Id = -1, Name = "Neuer Kurs",
+                    Id = -1,
+                    Name = "Neuer Kurs"
                 }
             });
 
             examViewModel.Teachers = new SelectList(teachers, "Id", "Name");
-            examViewModel.Periods = new []
-                {
-                    new PeriodViewModel{Period = Period.First, Name= "Erster Prüfungszeitraum"},
-                    new PeriodViewModel{Period = Period.Second, Name= "Zweiter Prüfungszeitraum"}
-                };
-
-            return View(examViewModel);
+            examViewModel.Courses = new SelectList(courses, "Id", "Name");
+            examViewModel.Periods = new[]
+            {
+                new PeriodViewModel {Period = Period.First, Name = "Erster Prüfungszeitraum"},
+                new PeriodViewModel {Period = Period.Second, Name = "Zweiter Prüfungszeitraum"}
+            };
         }
 
         // GET: exam/Edit/5
@@ -149,7 +128,7 @@ namespace luis_beuth.Controllers
                 return NotFound();
             }
 
-            var exam = await this._context.Exam.SingleAsync(p => p.Id == id);
+            var exam = await _context.Exam.SingleAsync(p => p.Id == id);
             if (exam == null)
             {
                 return NotFound();
@@ -165,24 +144,21 @@ namespace luis_beuth.Controllers
             {
                 return NotFound();
             }
-            
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    this._context.Update(exam);
+                    _context.Update(exam);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!this.ExamExists(exam.Id))
+                    if (!ExamExists(exam.Id))
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction("Index");
             }
@@ -195,7 +171,7 @@ namespace luis_beuth.Controllers
             {
                 return NotFound();
             }
-            
+
             var exam = await _context.Exam.SingleOrDefaultAsync(p => p.Id == id);
             if (exam == null)
             {
@@ -203,21 +179,21 @@ namespace luis_beuth.Controllers
             }
             return View(exam);
         }
-        
+
         // POST: Exam/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var exam = await _context.Exam.SingleOrDefaultAsync(p => p.Id == id);
-            this._context.Exam.Remove(exam);
+            _context.Exam.Remove(exam);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         private bool ExamExists(int id)
         {
-            return this._context.Exam.Any(p => p.Id == id);
+            return _context.Exam.Any(p => p.Id == id);
         }
     }
 }

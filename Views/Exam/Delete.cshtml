@@ -1,0 +1,60 @@
+@model luis_beuth.Models.Data.Exam
+@{
+    ViewData["Title"] = "Examen löschen";
+}
+
+<h2>Examen löschen</h2>
+<h3>Bist du dir sicher das du diesen Examen löschen möchtest?</h3>
+
+<form asp-action="Delete">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Id" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Id" class="form-control" readonly />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" readonly />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="MatriculationNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MatriculationNumber" class="form-control" readonly />
+                <span asp-validation-for="MatriculationNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Approved" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Approved" class="form-control" readonly />
+                <span asp-validation-for="Approved" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Löschen" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Zurück zur Examenliste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -9,33 +9,30 @@ using System.Collections.Generic;
 
 namespace luis_beuth.Controllers
 {
-    [Route("api/student")]
-    public class ApiStudentController : Controller
+    [Route("api/exam")]
+    public class ApiExamController : Controller
     {
         private ApplicationDbContext _context;
 
-        public ApiStudentController (ApplicationDbContext context)
+        public ApiExamController (ApplicationDbContext context)
         {
             this._context = context;
         }
 
         // 
-        // GET: /Student/
+        // GET: /Exam/
         [HttpGet]
-        public IEnumerable<Student> Get()
+        public IEnumerable<Exam> Get()
         {
-            return _context.Student.ToList();
+            return _context.Exam.ToList();
         }
 
         // 
-        // GET: /Student/{Id}/ 
+        // GET: /Exam/{Id}/ 
         [HttpGet("{id}")]
-        public Student GetById(int id)
+        public Exam GetById(int id)
         {
-            return _context.Student.FirstOrDefault(p => p.Id == id);
+            return _context.Exam.FirstOrDefault(p => p.Id == id);
         }
-
-        // 
-        // POST: /create Student
     }
 }

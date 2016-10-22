@@ -1,0 +1,124 @@
+@model luis_beuth.Models.ExamViewModels.CreateExamViewModel
+
+@{
+    ViewData["Title"] = "Neue Klausur anlegen";
+}
+
+<h2>Klausur anlegen</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Semester" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Semester" class="form-control" />
+                <span asp-validation-for="Semester" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="TeacherId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                 <select id="teacherSelect" asp-for="TeacherId" asp-items="@Model.Teachers"></select>
+                <!--<input asp-for="Teacher" class="form-control" />-->
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group" id="newTeacher">
+            <label asp-for="NewTeacherName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewTeacherName" class="form-control" />
+                <span asp-validation-for="NewTeacherName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CourseId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                 <select id="courseSelect" asp-for="CourseId" asp-items="@Model.Courses"></select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group" id=newCourse>
+            <label asp-for="NewCourseName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewCourseName" class="form-control" />
+                <span asp-validation-for="NewCourseName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Period" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <div class="col-md-10">
+                @foreach (var item in Model.Periods)
+                {
+                    <input asp-for="Period" type="radio" value="@item.Period" /> @item.Name
+                }
+                </div>
+                <!--<input asp-for="Period" class="form-control" />-->
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" class="form-control" />
+                <!span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Speichern" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Zurück zur Examenliste</a>
+</div>
+
+<script lang="javascript">
+    var tSelect = document.getElementById("teacherSelect");
+    var tDiv = document.getElementById("newTeacher");
+    
+    var toggle = function(){
+        if(tSelect.value == -1){
+            tDiv.style.display = "block"
+        }else{
+            tDiv.style.display = "none"
+        }
+    }
+
+    tSelect.onchange = toggle;
+
+    toggle();
+    
+    var cSelect = document.getElementById("courseSelect");
+    var cDiv = document.getElementById("newCourse");
+    
+    var coggle = function(){
+        if(cSelect.value == -1){
+            cDiv.style.display = "block"
+        }else{
+            cDiv.style.display = "none"
+        }
+    }
+
+    cSelect.onchange = coggle;
+
+    coggle();
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

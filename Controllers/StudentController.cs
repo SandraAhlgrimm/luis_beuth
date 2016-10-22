@@ -100,6 +100,32 @@ namespace luis_beuth.Controllers
             return View(student);
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+            var student = await _context.Student.SingleOrDefaultAsync(p => p.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+        
+        // POST: Student/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var student = await _context.Student.SingleOrDefaultAsync(p => p.Id == id);
+            this._context.Student.Remove(student);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
         private bool StudentExists(int id)
         {
             return this._context.Student.Any(p => p.Id == id);

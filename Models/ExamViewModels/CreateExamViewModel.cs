@@ -13,6 +13,7 @@ namespace luis_beuth.Models.ExamViewModels
         [Display(Name = "Dozent")]
         public int TeacherId { get; set; }
 
+        [Display(Name = "Dozentenname")]
         public string NewTeacherName { get; set; }
 
         public PeriodViewModel[] Periods { get; set; }
@@ -28,6 +29,8 @@ namespace luis_beuth.Models.ExamViewModels
 
         [Display(Name = "Modul")]
         public int CourseId { get; set; }
+
+        [Display(Name = "Modulname")]
         public string NewCourseName { get; set; }
 
         public string Semester { get; set; }

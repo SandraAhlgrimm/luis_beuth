@@ -1,9 +1,9 @@
-@model luis_beuth.Models.Data.Exam
+@model luis_beuth.Models.ExamViewModels.CreateExamViewModel
 @{
-    ViewData["Title"] = "Examen editieren";
+    ViewData["Title"] = "Klausur editieren";
 }
 
-<h2>Examen editieren</h2>
+<h2>Klausur editieren</h2>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
@@ -18,34 +18,57 @@
             </div>
         </div>
         
-        <div class="form-group">
+       <div class="form-group">
             <label asp-for="Semester" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Semester" class="form-control" />
                 <span asp-validation-for="Semester" class="text-danger"></span>
             </div>
         </div>
         
         <div class="form-group">
-            <label asp-for="Teacher" class="col-md-2 control-label"></label>
+            <label asp-for="TeacherId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Teacher" class="form-control" />
-                <span asp-validation-for="Teacher" class="text-danger"></span>
+                 <select id="teacherSelect" asp-for="TeacherId" asp-items="@Model.Teachers"></select>
+                <!--<input asp-for="Teacher" class="form-control" />-->
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group" id="newTeacher">
+            <label asp-for="NewTeacherName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewTeacherName" class="form-control" />
+                <span asp-validation-for="NewTeacherName" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="Course" class="col-md-2 control-label"></label>
+            <label asp-for="CourseId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Course" class="form-control" />
-                <span asp-validation-for="Course" class="text-danger"></span>
+                 <select id="courseSelect" asp-for="CourseId" asp-items="@Model.Courses"></select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group" id=newCourse>
+            <label asp-for="NewCourseName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewCourseName" class="form-control" />
+                <span asp-validation-for="NewCourseName" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group">
             <label asp-for="Period" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Period" class="form-control" />
+                <div class="col-md-10">
+                @foreach (var item in Model.Periods)
+                {
+                    <input asp-for="Period" type="radio" value="@item.Period" /> @item.Name
+                }
+                </div>
+                <!--<input asp-for="Period" class="form-control" />-->
                 <span asp-validation-for="Period" class="text-danger"></span>
             </div>
         </div>
@@ -54,7 +77,7 @@
             <label asp-for="Grade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger"></span>
+                <!span asp-validation-for="Grade" class="text-danger"></span>
             </div>
         </div>
 

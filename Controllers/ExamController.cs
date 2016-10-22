@@ -24,7 +24,7 @@ namespace luis_beuth.Controllers
         // GET: Exams
         public async Task<IActionResult> Index()
         {
-            var exams = await _context.Exam.ToListAsync();
+            var exams = await this._context.Exam.Include(val => val.Teacher).Include(val => val.Course).ToListAsync();
 
             return View(exams);
         }

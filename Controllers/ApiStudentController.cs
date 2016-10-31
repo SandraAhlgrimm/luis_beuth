@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
-using luis_beuth.Models;
 using luis_beuth.Models.Data;
-using luis_beuth.Services;
 using luis_beuth.Data;
+using luis_beuth.Models.ApiStudentModels;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace luis_beuth.Controllers
 {
@@ -13,10 +13,13 @@ namespace luis_beuth.Controllers
     public class ApiStudentController : Controller
     {
         private ApplicationDbContext _context;
+        private readonly ILogger<ExamController> _logger;
 
-        public ApiStudentController (ApplicationDbContext context)
+
+        public ApiStudentController (ApplicationDbContext context, ILogger<ExamController> logger)
         {
-            this._context = context;
+            _context = context;
+            _logger = logger;
         }
 
         // 
@@ -36,6 +39,14 @@ namespace luis_beuth.Controllers
         }
 
         // 
-        // POST: /create Student
+        // POST: /api/student
+        [Route("")]
+        public async Task<string> Post(CreateStudentApiModel content) {
+            var Name = content.Name;
+            var Matrikculationnumber = content.MatriculationNumber;
+            _logger.LogDebug(Name + Matrikculationnumber);
+
+            return Name;
+        }
     }
 }

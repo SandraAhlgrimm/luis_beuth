@@ -33,7 +33,7 @@ namespace luis_beuth.Controllers
         // 
         // GET: /Student/{Id}/ 
         [HttpGet("{id}")]
-        public Student GetById(int id)
+        public IActionResult GetById(int id)
         {
             var found = _context.Student.FirstOrDefault(p => p.Id == id);
             if (found == null)

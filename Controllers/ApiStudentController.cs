@@ -35,7 +35,13 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public Student GetById(int id)
         {
-            return _context.Student.FirstOrDefault(p => p.Id == id);
+            var found = _context.Student.FirstOrDefault(p => p.Id == id);
+            if (found == null)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(found);
         }
 
         /*// 

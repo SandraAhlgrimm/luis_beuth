@@ -13,10 +13,10 @@ namespace luis_beuth.Controllers
     public class ApiStudentController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly ILogger<ExamController> _logger;
+        private readonly ILogger<ApiStudentController> _logger;
 
 
-        public ApiStudentController (ApplicationDbContext context, ILogger<ExamController> logger)
+        public ApiStudentController (ApplicationDbContext context, ILogger<ApiStudentController> logger)
         {
             _context = context;
             _logger = logger;
@@ -38,7 +38,7 @@ namespace luis_beuth.Controllers
             return _context.Student.FirstOrDefault(p => p.Id == id);
         }
 
-        // 
+        /*// 
         // POST: /api/student
         [Route("")]
         public async Task<string> Post(CreateStudentApiModel content) {
@@ -47,6 +47,60 @@ namespace luis_beuth.Controllers
             _logger.LogDebug(Name + Matrikculationnumber);
 
             return Name;
+        }*/
+
+        // POST api/values
+        [HttpPost]
+        public IActionResult Post([FromBody]Student newStudent)
+        {
+            if (newStudent == null || string.IsNullOrWhiteSpace(newStudent.Name) || newStudent.MatriculationNumber <= 0 )
+            {
+                return BadRequest();
+            }
+            _context.Student.Add(newStudent);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        // PUT api/student/5
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]Student student)
+        {
+            if (student == null /*|| student.id != id*/) // optional: Prüfung ob id des Studenten der übermittelt wird gleich der id in der Route ist
+            {
+                return BadRequest();
+            }
+            
+            var studentToUpdate = _context.Student.FirstOrDefault(p => p.Id == id);
+            if (studentToUpdate == null)
+            {
+                return NotFound();
+            }
+            
+            // studentToUpdate.Id is created by database
+            studentToUpdate.Name = student.Name;
+            studentToUpdate.MatriculationNumber = student.MatriculationNumber;
+            studentToUpdate.Approved = false; // only via Web Interface
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        // DELETE api/student/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var studentToDelete = _context.Student.FirstOrDefault(p => p.Id == id);
+            if (studentToDelete == null)
+            {
+                return NotFound();
+            }
+            _context.Student.Remove(studentToDelete);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }

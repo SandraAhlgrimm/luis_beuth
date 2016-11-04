@@ -3,9 +3,9 @@
 function connectSelectorToElement(sel, el) {
     var toggle = function () {
         if (sel.value == -1) {
-            el.style.display = "block";
+            $(el).show(200);
         } else {
-            el.style.display = "none";
+            $(el).hide(200);
         }
     }
 

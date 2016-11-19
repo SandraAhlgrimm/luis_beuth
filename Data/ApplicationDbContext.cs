@@ -15,7 +15,9 @@ namespace luis_beuth.Data
         public DbSet<Exam> Exam { get; set; }  
         public DbSet<Rent> Rent { get; set; }  
         public DbSet<Student> Student { get; set; }  
-        public DbSet<Teacher> Teacher { get; set; }  
+        public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<Login> Logins { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

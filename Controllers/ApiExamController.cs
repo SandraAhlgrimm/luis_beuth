@@ -33,7 +33,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public Exam GetById(int id)
         {
-            return _context.Exam.FirstOrDefault(p => p.Id == id);
+            return _context.Exam.Include(a => a.Course).Include(t => t.Teacher).FirstOrDefault(p => p.Id == id);
         }
     }
 }

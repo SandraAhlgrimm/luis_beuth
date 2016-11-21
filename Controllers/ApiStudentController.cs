@@ -5,6 +5,7 @@ using luis_beuth.Models.ApiStudentModels;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace luis_beuth.Controllers
@@ -27,7 +28,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Student> Get()
         {
-            return _context.Student.ToList();
+            return _context.Student.Include(r => r.Rents).ToList();
         }
 
         // 
@@ -35,7 +36,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var found = _context.Student.FirstOrDefault(p => p.Id == id);
+            var found = _context.Student.Include(r => r.Rents).FirstOrDefault(p => p.Id == id);
             if (found == null)
             {
                 return NotFound();
@@ -59,7 +60,7 @@ namespace luis_beuth.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Student newStudent)
         {
-            if (newStudent == null || string.IsNullOrWhiteSpace(newStudent.Name) || newStudent.MatriculationNumber <= 0 )
+            if (string.IsNullOrWhiteSpace(newStudent.Name) || newStudent.MatriculationNumber <= 0 )
             {
                 return BadRequest();
             }

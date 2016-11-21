@@ -6,6 +6,7 @@ using luis_beuth.Services;
 using luis_beuth.Data;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace luis_beuth.Controllers
 {
@@ -24,7 +25,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Exam> Get()
         {
-            return _context.Exam.ToList();
+            return _context.Exam.Include(a => a.Course).Include(t => t.Teacher).ToList();
         }
 
         // 

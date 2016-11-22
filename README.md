@@ -1,6 +1,6 @@
 # LUIS Backend for an inventary system
 
-Frontend App can be found hat luis_beuth_mobile.
+Frontend App can be found at luis_beuth_mobile.
 
 # ASP.NET DOKU: Welcome to ASP.NET Core
 

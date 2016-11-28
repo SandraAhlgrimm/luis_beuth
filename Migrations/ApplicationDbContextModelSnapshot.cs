@@ -106,6 +106,20 @@ namespace luis_beuth.Migrations
                     b.ToTable("Exam");
                 });
 
+            modelBuilder.Entity("luis_beuth.Models.Data.Login", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("luis_beuth.Models.Data.Rent", b =>
                 {
                     b.Property<int>("Id")

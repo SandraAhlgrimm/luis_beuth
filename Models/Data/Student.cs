@@ -12,7 +12,7 @@ namespace luis_beuth.Models.Data
 
         [Display(Name = "Zugelassen")]
         public bool Approved { get; set; }
-        public List<Rent> Rents { get; }
+        public List<Rent> Rents { get; set; }
         public string Name { get; set; }
     }
 }

@@ -1,0 +1,44 @@
+@model luis_beuth.Models.Data.Login
+@{
+    ViewData["Title"] = "Passwort löschen";
+}
+
+<h2>Passwort löschen</h2>
+<h3>Bist du dir sicher das du dieses Passwort löschen möchtest?</h3>
+
+<form asp-action="Delete">
+  <div class="form-horizontal">
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+      <label asp-for="Id" class="col-md-2 control-label"></label>
+      <div class="col-md-10">
+        <input asp-for="Id" class="form-control" readonly />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label asp-for="PasswordHash" class="col-md-2 control-label"></label>
+      <div class="col-md-10">
+        <input asp-for="PasswordHash" class="form-control" readonly />
+        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Löschen" class="btn btn-default" />
+      </div>
+    </div>
+  </div>
+</form>
+
+<div>
+  <a asp-action="Index">Zurück zur Passwortliste</a>
+</div>
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

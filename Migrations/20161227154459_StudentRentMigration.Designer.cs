@@ -8,8 +8,8 @@ using luis_beuth.Data;
 namespace luis_beuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161021205040_AddNameToStudent")]
-    partial class AddNameToStudent
+    [Migration("20161227154459_StudentRentMigration")]
+    partial class StudentRentMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,6 +105,20 @@ namespace luis_beuth.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Exam");
+                });
+
+            modelBuilder.Entity("luis_beuth.Models.Data.Login", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("luis_beuth.Models.Data.Rent", b =>

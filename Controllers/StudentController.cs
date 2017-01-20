@@ -7,6 +7,8 @@ using luis_beuth.Models;
 using luis_beuth.Models.Data;
 using luis_beuth.Services;
 using luis_beuth.Data;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace luis_beuth.Controllers
 {
@@ -19,6 +21,7 @@ namespace luis_beuth.Controllers
         }
 
         // GET: Students
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await this._context.Student.ToListAsync());
@@ -29,6 +32,7 @@ namespace luis_beuth.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,MatriculationNumber,Approved")] Student student)
@@ -53,6 +57,7 @@ namespace luis_beuth.Controllers
         }
 
         // GET: student/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -68,6 +73,7 @@ namespace luis_beuth.Controllers
             return View(student);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,MatriculationNumber,Approved")] Student student)
@@ -100,6 +106,7 @@ namespace luis_beuth.Controllers
             return View(student);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -114,8 +121,9 @@ namespace luis_beuth.Controllers
             }
             return View(student);
         }
-        
+
         // POST: Student/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -126,6 +134,7 @@ namespace luis_beuth.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         private bool StudentExists(int id)
         {
             return this._context.Student.Any(p => p.Id == id);

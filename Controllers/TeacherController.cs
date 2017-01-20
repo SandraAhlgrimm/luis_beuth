@@ -7,6 +7,7 @@ using luis_beuth.Models;
 using luis_beuth.Models.Data;
 using luis_beuth.Services;
 using luis_beuth.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace luis_beuth.Controllers
 {
@@ -19,16 +20,19 @@ namespace luis_beuth.Controllers
         }
 
         // GET: Teachers
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await this._context.Teacher.ToListAsync());
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name")] Teacher teacher)
@@ -53,6 +57,7 @@ namespace luis_beuth.Controllers
         }
 
         // GET: Teacher/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -68,6 +73,7 @@ namespace luis_beuth.Controllers
             return View(teacher);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Teacher teacher)
@@ -100,6 +106,7 @@ namespace luis_beuth.Controllers
             return View(teacher);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,6 +133,7 @@ namespace luis_beuth.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         private bool TeacherExists(int id)
         {
             return this._context.Teacher.Any(p => p.Id == id);

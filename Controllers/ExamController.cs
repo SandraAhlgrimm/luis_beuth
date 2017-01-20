@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace luis_beuth.Controllers
 {
@@ -22,13 +24,14 @@ namespace luis_beuth.Controllers
         }
 
         // GET: Exams
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var exams = await _context.Exam.Include(val => val.Teacher).Include(val => val.Course).ToListAsync();
 
             return View(exams);
         }
-
+        [Authorize]
         public IActionResult Create()
         {
             var model = new CreateExamViewModel();
@@ -38,6 +41,7 @@ namespace luis_beuth.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind] CreateExamViewModel examViewModel)
@@ -121,6 +125,7 @@ namespace luis_beuth.Controllers
         }
 
         // GET: exam/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,6 +141,7 @@ namespace luis_beuth.Controllers
             return View(exam);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind] CreateExamViewModel exam)
@@ -180,6 +186,7 @@ namespace luis_beuth.Controllers
             return View(exam);
         }
 
+        [Authorize]
         // POST: Exam/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

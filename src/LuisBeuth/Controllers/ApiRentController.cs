@@ -43,6 +43,7 @@ namespace luis_beuth.Controllers
             {
                 return BadRequest();
             }
+            newRent.StartDate = DateTime.Now;
             _context.Rent.Add(newRent);
             _context.SaveChanges();
 

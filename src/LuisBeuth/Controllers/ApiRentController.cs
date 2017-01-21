@@ -24,7 +24,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Rent> Get()
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList();
+            return _context.Rent.ToList();
         }
 
         // 
@@ -39,7 +39,7 @@ namespace luis_beuth.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Rent newRent)
         {
-            if (!(newRent.StudentId >= 0) || !(newRent.ExamId >= 0))
+            if (!(newRent.Student.MatriculationNumber >= 0) || !(newRent.ExamId >= 0))
             {
                 return BadRequest();
             }

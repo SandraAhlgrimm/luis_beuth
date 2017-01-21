@@ -26,6 +26,6 @@ namespace luis_beuth.Models.Data
         public Period Period { get; set; }
         [Display(Name = "Note")]
         public double Grade { get; set; }
-        public List<Rent> Rents { get; }
+        public List<Rent> Rents { get; set; }
     }
 }

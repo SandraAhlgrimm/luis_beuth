@@ -47,18 +47,8 @@ namespace luis_beuth.Controllers
             return new ObjectResult(found);
         }
 
-        /*// 
-        // POST: /api/student
-        [Route("")]
-        public async Task<string> Post(CreateStudentApiModel content) {
-            var Name = content.Name;
-            var Matrikculationnumber = content.MatriculationNumber;
-            _logger.LogDebug(Name + Matrikculationnumber);
-
-            return Name;
-        }*/
-
-        // POST api/values
+       
+        // POST /api/student
         [HttpPost]
         public IActionResult Post([FromBody]Student newStudent)
         {

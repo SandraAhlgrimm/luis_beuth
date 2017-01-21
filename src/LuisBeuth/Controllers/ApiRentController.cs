@@ -39,13 +39,37 @@ namespace luis_beuth.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Rent newRent)
         {
-            if (!(newRent.Student.MatriculationNumber >= 0) || !(newRent.ExamId >= 0))
+            if (!(newRent.StudentId >= 0) || !(newRent.ExamId >= 0))
             {
                 return BadRequest();
             }
-            newRent.StartDate = DateTime.Now;
-            //newRent.EndDate = DateTime.Now.AddDays(14);
+            var today = DateTime.Now;
+            newRent.StartDate = today;
+            newRent.EndDate = today.AddDays(14);
             _context.Rent.Add(newRent);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        // PUT api/rent/1
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]Rent rent)
+        {
+            if (rent == null)
+            {
+                return BadRequest();
+            }
+
+            var rentToUpdate = _context.Rent.FirstOrDefault(p => p.Id == id);
+            if (rentToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            rentToUpdate.StudentId = 0;
+            rentToUpdate.Student = null;
+
             _context.SaveChanges();
 
             return NoContent();

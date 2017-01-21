@@ -46,8 +46,7 @@ namespace luis_beuth.Controllers
             var today = DateTime.Now;
             newRent.StartDate = today;
             newRent.EndDate = today.AddDays(14);
-            newRent.Student = _context.Student.FirstOrDefault(i => i.MatriculationNumber == newRent.Student.MatriculationNumber);
-            newRent.StudentId = newRent.Student.Id;
+            newRent.StudentId = _context.Student.FirstOrDefault(i => i.MatriculationNumber == newRent.Student.MatriculationNumber).Id;
             _context.Rent.Add(newRent);
             _context.SaveChanges();
 

@@ -39,13 +39,14 @@ namespace luis_beuth.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Rent newRent)
         {
-            if (!(newRent.StudentId >= 0) || !(newRent.ExamId >= 0))
+            if (!(newRent.Student.MatriculationNumber >= 0) || !(newRent.ExamId >= 0))
             {
                 return BadRequest();
             }
             var today = DateTime.Now;
             newRent.StartDate = today;
             newRent.EndDate = today.AddDays(14);
+            newRent.Student = _context.Student.FirstOrDefault(i => i.MatriculationNumber == newRent.Student.MatriculationNumber);
             _context.Rent.Add(newRent);
             _context.SaveChanges();
 

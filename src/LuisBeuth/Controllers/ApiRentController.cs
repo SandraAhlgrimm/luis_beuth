@@ -24,7 +24,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Rent> Get()
         {
-            return _context.Rent.ToList();
+            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList();
         }
 
         // 
@@ -47,6 +47,7 @@ namespace luis_beuth.Controllers
             newRent.StartDate = today;
             newRent.EndDate = today.AddDays(14);
             newRent.Student = _context.Student.FirstOrDefault(i => i.MatriculationNumber == newRent.Student.MatriculationNumber);
+            newRent.StudentId = newRent.Student.Id;
             _context.Rent.Add(newRent);
             _context.SaveChanges();
 

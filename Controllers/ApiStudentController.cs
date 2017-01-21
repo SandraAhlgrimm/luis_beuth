@@ -27,7 +27,6 @@ namespace luis_beuth.Controllers
 
         // 
         // GET: /Student/
-        [Authorize]
         [HttpGet]
         public IEnumerable<Student> Get()
         {
@@ -36,7 +35,6 @@ namespace luis_beuth.Controllers
 
         // 
         // GET: /Student/{Id}/ 
-        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -61,8 +59,6 @@ namespace luis_beuth.Controllers
         }*/
 
         // POST api/values
-
-        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody]Student newStudent)
         {
@@ -77,7 +73,6 @@ namespace luis_beuth.Controllers
         }
 
         // PUT api/student/5
-        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Student student)
         {
@@ -103,7 +98,6 @@ namespace luis_beuth.Controllers
         }
 
         // DELETE api/student/5
-        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

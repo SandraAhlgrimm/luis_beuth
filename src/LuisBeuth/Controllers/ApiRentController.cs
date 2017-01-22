@@ -24,7 +24,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Rent> Get()
         {
-            return _context.Rent.ToList();
+            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList();
         }
 
         // 

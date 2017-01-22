@@ -57,10 +57,10 @@ namespace luis_beuth.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Rent rent)
         {
-            if (rent == null)
-            {
-                return BadRequest();
-            }
+            //if (rent == null)
+            //{
+            //    return BadRequest();
+            //}
 
             var rentToUpdate = _context.Rent.FirstOrDefault(p => p.Id == id);
             if (rentToUpdate == null)

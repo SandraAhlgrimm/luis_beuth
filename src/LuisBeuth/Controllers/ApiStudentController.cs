@@ -30,7 +30,7 @@ namespace luis_beuth.Controllers
         [HttpGet]
         public IEnumerable<Student> Get()
         {
-            return _context.Student.Include(r => r.Rents).ToList();
+            return _context.Student.ToList();
         }
 
         // 
@@ -38,7 +38,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var found = _context.Student.Include(r => r.Rents).FirstOrDefault(p => p.Id == id);
+            var found = _context.Student.FirstOrDefault(p => p.Id == id);
             if (found == null)
             {
                 return NotFound();

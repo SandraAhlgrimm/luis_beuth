@@ -53,28 +53,22 @@ namespace luis_beuth.Controllers
             return NoContent();
         }
 
-        // PUT api/rent/1
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Rent rent)
+        // POST api/rent
+        [HttpPost]
+        public IActionResult Put([FromBody]Rent newRent)
         {
-            //if (rent == null)
-            //{
-            //    return BadRequest();
-            //}
-
-            var rentToUpdate = _context.Rent.FirstOrDefault(p => p.Id == id);
-            if (rentToUpdate == null)
+            if (!(newRent.ExamId >= 0))
             {
-                return NotFound();
+                return BadRequest();
             }
-
-            rentToUpdate.StudentId = 0;
-            rentToUpdate.Student = null;
+            newRent.Id = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId).Id;
+            newRent.StudentId = 0;
+            newRent.Student = null;
+            _context.Rent.Update(newRent);
 
             _context.SaveChanges();
 
             return NoContent();
         }
-
     }
 }

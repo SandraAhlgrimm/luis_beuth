@@ -61,6 +61,15 @@ namespace luis_beuth.Controllers
             {
                 return BadRequest();
             }
+            if (_context.Rent.Count(r => r.ExamId == newRent.ExamId) == 0)
+            {
+                return StatusCode(409);
+            }
+            if (_context.Rent.Count(r => r.StudentId == 0) == 0)
+            {
+                return StatusCode(418);
+            }
+
             newRent.Id = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId).Id;
             newRent.StudentId = 0;
             newRent.Student = null;

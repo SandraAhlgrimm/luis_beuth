@@ -55,7 +55,7 @@ namespace luis_beuth.Controllers
 
         // POST api/rent
         [HttpPost]
-        public IActionResult Put([FromBody]Rent newRent)
+        public IActionResult Post([FromBody]Rent newRent)
         {
             if (!(newRent.ExamId >= 0))
             {

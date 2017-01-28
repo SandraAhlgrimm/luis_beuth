@@ -28,11 +28,11 @@ namespace luis_beuth.Controllers
         }
 
         // 
-        // GET: /api/rent/{Id}/ 
+        // GET: /api/rent/{StudentId}/ 
         [HttpGet("{id}")]
         public Rent GetById(int id)
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).FirstOrDefault(p => p.Id == id);
+            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).FirstOrDefault(p => p.StudentId == id);
         }
 
         // POST: /api/rent/

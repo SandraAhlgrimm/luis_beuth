@@ -32,7 +32,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Rent> GetById(int id)
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList().FindAll(p => p.StudentId == id);
+            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList().FindAll(p => p.StudentId == id).ToList();
         }
 
         // POST: /api/rent/
@@ -73,7 +73,7 @@ namespace luis_beuth.Controllers
 
             var rent = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId);
             return StatusCode(200);
-
+ 
             rent.StudentId = 0;
             rent.Student = null;
             _context.Rent.Update(rent);

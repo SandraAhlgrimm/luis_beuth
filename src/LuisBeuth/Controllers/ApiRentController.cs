@@ -71,7 +71,9 @@ namespace luis_beuth.Controllers
                 return StatusCode(418);
             }
 
-            var rent = _context.Rent.FirstOrDefault(r => newRent.ExamId == r.ExamId);
+            var rent = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId);
+            return StatusCode(200);
+
             rent.StudentId = 0;
             rent.Student = null;
             _context.Rent.Update(rent);

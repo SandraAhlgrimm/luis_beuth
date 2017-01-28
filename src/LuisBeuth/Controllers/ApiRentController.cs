@@ -66,7 +66,7 @@ namespace luis_beuth.Controllers
             {
                 return StatusCode(409);
             }
-            if (_context.Rent.Count(r => r.StudentId == 0) == 0)
+            if (_context.Rent.Count(r => r.StudentId == 0) != 0)
             {
                 return StatusCode(418);
             }

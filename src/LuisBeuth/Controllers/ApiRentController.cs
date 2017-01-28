@@ -32,7 +32,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Rent> GetById(int id)
         {
-            return _context.Rent.Include(s => s.Student).Include(e => _context.Exam.Include(t => t.Teacher).Include(c => c.Course).FirstOrDefault(k => e.ExamId == k.Id)).ToList().FindAll(p => p.Student.MatriculationNumber == id).ToList();
+            return _context.Rent.Include(s => s.Student).Include(e => _context.Exam.FirstOrDefault(k => e.ExamId == k.Id)).ToList().FindAll(p => p.Student.MatriculationNumber == id).ToList();
         }
 
         // POST: /api/rent/

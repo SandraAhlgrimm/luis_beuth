@@ -30,9 +30,9 @@ namespace luis_beuth.Controllers
         // 
         // GET: /api/rent/{StudentId}/ 
         [HttpGet("{id}")]
-        public Rent GetById(int id)
+        public IEnumerable<Rent> GetById(int id)
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).FirstOrDefault(p => p.StudentId == id);
+            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList().FindAll(p => p.StudentId == id);
         }
 
         // POST: /api/rent/

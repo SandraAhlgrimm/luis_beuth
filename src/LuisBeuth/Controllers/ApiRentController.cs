@@ -75,7 +75,6 @@ namespace luis_beuth.Controllers
             rent.StudentId = 0;
             rent.Student = null;
             _context.Rent.Update(rent);
-            return StatusCode(200);
 
             _context.SaveChanges();
 

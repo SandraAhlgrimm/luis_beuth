@@ -60,6 +60,11 @@ namespace luis_beuth
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            using (var context = app.ApplicationServices.GetService<ApplicationDbContext>())
+            {
+                context.Database.Migrate();
+            }
+
          //   if (env.IsDevelopment())
            // {
                 app.UseDeveloperExceptionPage();

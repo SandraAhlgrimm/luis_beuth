@@ -19,30 +19,41 @@ namespace luis_beuth.Controllers
             this._context = context;
         }
 
-        // 
         // GET: /api/rent/
         [HttpGet]
         public IEnumerable<Rent> Get()
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList();
+            return _context.Rent
+                .Where(val => val.ReturnedAt == null)
+                .Include(s => s.Student)
+                .Include(e => e.Exam)
+                .ToList();
         }
 
-        // 
-        // GET: /api/rent/{StudentId}/ 
+        // GET: /api/rent/{StudentId}/
         [HttpGet("{id}")]
         public IEnumerable<Rent> GetById(int id)
         {
-            return _context.Rent.Include(s => s.Student).Include(e => e.Exam).ToList().FindAll(p => p.Student.MatriculationNumber == id).ToList();
+            return _context.Rent
+                .Where(val => val.ReturnedAt == null)
+                .Include(s => s.Student).Include(e => e.Exam)
+                .ToList()
+                .FindAll(p => p.Student.MatriculationNumber == id)
+                .ToList();
         }
 
         // POST: /api/rent/
         [HttpPost]
         public IActionResult Post([FromBody]Rent newRent)
         {
-            if (!(newRent.Student.MatriculationNumber >= 0) || !(newRent.ExamId >= 0))
+            if ((newRent?.Student?.MatriculationNumber <= 0) || newRent?.ExamId <= 0)
             {
                 return BadRequest();
             }
+
+            if(newRent.ReturnedAt != null)
+                return BadRequest();
+
             var today = DateTime.Now;
             newRent.StartDate = today;
             newRent.EndDate = today.AddDays(14);
@@ -55,30 +66,19 @@ namespace luis_beuth.Controllers
 
         // PUT api/rent
 
-        [HttpPut]
-        public IActionResult Put([FromBody]Rent newRent)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            if (!(newRent.ExamId >= 0))
-            {
-                return BadRequest();
-            }
-            if (_context.Rent.Count(r => r.ExamId == newRent.ExamId) == 0)
-            {
-                return StatusCode(409);
-            }
-            if (_context.Rent.Count(r => r.StudentId == 0) != 0)
-            {
-                return StatusCode(418);
-            }
+            var rent = _context.Rent.FirstOrDefault(val => val.Id == id);
 
-            var rent = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId); 
-            rent.StudentId = 0;
-            rent.Student = null;
-            _context.Rent.Update(rent);
+            if(rent == null)
+                return NotFound();
+
+            rent.ReturnedAt = DateTime.Now;
 
             _context.SaveChanges();
 
-            return StatusCode(200);
+            return Ok();
         }
     }
 }

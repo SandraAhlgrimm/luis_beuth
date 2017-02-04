@@ -65,14 +65,13 @@ namespace luis_beuth.Controllers
         }
 
         // PUT api/rent
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPut]
+        public IActionResult Put([FromBody]Rent newRent)
         {
-            var rent = _context.Rent.FirstOrDefault(val => val.Id == id);
+            var rent = _context.Rent.FirstOrDefault(r => r.ExamId == newRent.ExamId);
 
-            if(rent == null)
-                return NotFound();
+            if (rent == null)
+                return StatusCode(218); //NotFound();
 
             rent.ReturnedAt = DateTime.Now;
 

@@ -79,5 +79,22 @@ namespace luis_beuth.Controllers
 
             return Ok();
         }
+
+
+        // DELETE by rentId
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var rent = _context.Rent.FirstOrDefault(val => val.Id == id);
+
+            if (rent == null)
+                return NotFound();
+
+            rent.ReturnedAt = DateTime.Now;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }

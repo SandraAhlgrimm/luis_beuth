@@ -74,7 +74,7 @@ namespace luis_beuth.Controllers
                 return StatusCode(218); //NotFound();
 
             rent.ReturnedAt = DateTime.Now;
-
+            _context.Rent.Update(rent);
             _context.SaveChanges();
 
             return Ok();

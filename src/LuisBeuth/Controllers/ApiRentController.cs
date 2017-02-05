@@ -75,7 +75,7 @@ namespace luis_beuth.Controllers
 
             rent.ReturnedAt = DateTime.Now;
             _context.Rent.Update(rent);
-            await _context.SaveChanges();
+            _context.SaveChanges();
 
             return Ok();
         }

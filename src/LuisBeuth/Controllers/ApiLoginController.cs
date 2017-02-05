@@ -22,8 +22,8 @@ namespace luis_beuth.Controllers
         [HttpGet("{matriculationNumber}")]
         public IActionResult Get(int matriculationNumber, string passwordHash)
         {
-            if (_context.Logins.FirstOrDefault(l => l.Name == passwordHash) != null)
-                return NoContent();
+            if (_context.Logins.FirstOrDefault(l => l.PasswordHash == passwordHash) != null)
+                return Ok("approved");
             else
             {
                 return NotFound();

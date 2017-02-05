@@ -22,7 +22,7 @@ namespace luis_beuth.Controllers
         [HttpGet("{matriculationNumber}")]
         public IActionResult Get(int matriculationNumber, string passwordHash)
         {
-            if (_context.Logins.FirstOrDefault(l => l.PasswordHash == passwordHash) != null)
+            if (_context.Logins.FirstOrDefault(l => l.Name == passwordHash) != null)
                 return NoContent();
             else
             {
